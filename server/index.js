@@ -1,4 +1,8 @@
-require('dotenv').config({ silent: false })
+try {
+  require('dotenv').config({ silent: true })
+} catch (err) {
+  /* NOOP */
+}
 
 const Koa = require('koa')
 const consola = require('consola')
