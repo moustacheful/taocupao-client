@@ -40,7 +40,6 @@ async function start() {
 
   app.use((ctx, next) => {
     ctx.req.state = state
-    console.log(state)
     return next()
   })
 
