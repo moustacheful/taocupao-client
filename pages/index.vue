@@ -3,28 +3,28 @@ import { mapState, mapActions } from 'vuex'
 import Indicator from '~/components/Indicator'
 
 export default {
-  methods: {
-    ...mapActions(['startListening'])
-  },
+  components: { Indicator },
   computed: {
     ...mapState(['statuses', 'health', 'time']),
     isServiceAlive() {
-      return this.time - this.health.heartbeat < 10000
+      return this.time - this.health.heartbeat < 20000
     }
   },
-  components: { Indicator },
   mounted() {
     this.startListening()
+  },
+  methods: {
+    ...mapActions(['startListening'])
   }
 }
 </script>
 
 <template>
   <section class="container">
-    <div class="service-status" v-if="!isServiceAlive">
-      <i class="fa fa-unlink"></i> Offline
+    <div v-if="!isServiceAlive" class="service-status">
+      <i class="fa fa-unlink"/> Out of sync!
     </div>
-    <indicator v-for="(status, key) in statuses" :key="key" :status="status" :currentTime="time"/>
+    <indicator v-for="(status, key) in statuses" :key="key" :status="status" :current-time="time"/>
   </section>
 </template>
 

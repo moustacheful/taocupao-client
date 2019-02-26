@@ -1,6 +1,9 @@
 <script>
 export default {
-  props: ['status', 'currentTime'],
+  props: {
+    currentTime: { default: () => Date.now(), type: Number },
+    status: { default: () => {}, type: Object }
+  },
   computed: {
     time() {
       return Math.round((this.currentTime - this.status.since) / 1000)
@@ -18,10 +21,10 @@ export default {
 
 <template>
   <div :class="{'status': true, 'is-busy': status.active}">
-    {{status.label}}
-    <div class="toxic" v-if="isToxic">
+    {{ status.label }}
+    <div v-if="isToxic" class="toxic">
       <small>
-        <i class="fa fa-ban"></i>
+        <i class="fa fa-ban"/>
       </small>
     </div>
   </div>

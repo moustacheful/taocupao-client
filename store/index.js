@@ -39,8 +39,12 @@ export const actions = {
   },
 
   nuxtServerInit(store, context) {
-    if (context.req.status) {
-      store.commit('setStatuses', context.req.status)
+    if (context.req.state) {
+      const { health, status } = context.req.state
+
+      store.commit('setTime', Date.now())
+      store.commit('setHealth', health)
+      store.commit('setStatuses', status)
     }
   }
 }

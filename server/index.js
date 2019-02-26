@@ -32,14 +32,14 @@ async function start() {
   // Config database
   const firebaseDB = require('../lib/firebase')
 
-  let status = {}
+  let state = {}
 
-  firebaseDB.ref('status').on('value', snapshot => {
-    status = snapshot.val()
+  firebaseDB.ref().on('value', snapshot => {
+    state = snapshot.val()
   })
 
   app.use((ctx, next) => {
-    ctx.req.status = status
+    ctx.req.state = state
     return next()
   })
 
