@@ -7,6 +7,8 @@ export default {
   computed: {
     ...mapState(['statuses', 'health', 'time']),
     isServiceAlive() {
+      if (!this.health) return false
+
       return this.time - this.health.heartbeat < 20000
     }
   },
