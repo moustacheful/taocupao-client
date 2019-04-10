@@ -4,6 +4,7 @@ import Indicator from '~/components/Indicator'
 
 export default {
   components: { Indicator },
+
   computed: {
     ...mapState(['statuses', 'health', 'time']),
     isServiceAlive() {
@@ -12,11 +13,19 @@ export default {
       return this.time - this.health.heartbeat < 20000
     }
   },
+
   mounted() {
     this.startListening()
   },
+
   methods: {
     ...mapActions(['startListening'])
+  },
+
+  head() {
+    return {
+      title: 'Ta ocupao?'
+    }
   }
 }
 </script>
