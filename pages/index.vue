@@ -24,17 +24,49 @@ export default {
 <template>
   <section class="container">
     <div v-if="!isServiceAlive" class="service-status">
-      <i class="fa fa-unlink"/> Out of sync!
+      <fa class="icon" icon="satellite-dish"/>Out of sync!
     </div>
-    <indicator v-for="(status, key) in statuses" :key="key" :status="status" :current-time="time"/>
+    <div class="indicators">
+      <indicator
+        v-for="(status, key) in statuses"
+        :key="key"
+        :status="status"
+        :current-time="time"
+      />
+    </div>
   </section>
 </template>
 
 <style scoped>
+.icon {
+  margin-right: 5px;
+}
+.service-status {
+  color: #888;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
 .container {
   text-align: center;
   height: 100vh;
-  max-width: 800px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 720px) {
+  .container {
+    max-width: 480px;
+  }
 }
 </style>

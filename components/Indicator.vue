@@ -5,52 +5,48 @@ export default {
     status: { default: () => {}, type: Object }
   },
   computed: {
+    // Time elapsed since active, in seconds
     time() {
       return Math.round((this.currentTime - this.status.since) / 1000)
     },
+    // Whether this indicator has passed a certain threshold
     isToxic() {
       if (this.status.active) {
-        return this.time > 5
+        return this.time > 60
       }
 
-      return this.time < 5 && this.status.lastDuration > 5
+      return this.time < 30 && this.status.lastDuration > 60
     }
   }
 }
 </script>
 
 <template>
-  <div :class="{'status': true, 'is-busy': status.active}">
-    {{ status.label }}
-    <div v-if="isToxic" class="toxic">
-      <small>
-        <i class="fa fa-ban"/>
-      </small>
-    </div>
-  </div>
+  <div :class="{'status': true, 'is-busy': status.active, 'is-toxic': isToxic}">{{ status.label }}</div>
 </template>
 
 <style scoped>
 .status {
-  margin-top: 50%;
-  transform: translateY(-50%);
   vertical-align: middle;
-  display: inline-block;
-  width: 25%;
-  height: 0px;
-  padding-bottom: 25%;
+  width: 150px;
+  height: 150px;
   text-align: center;
   background: #eaeaea;
-  color: #666;
+  color: rgba(0, 0, 0, 0.3);
   transition: background 0.5s ease;
+  margin-right: 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.status:first-child {
-  border-radius: 10px 0px 0px 10px;
+.status:nth-child(2) {
+  margin-right: 80px;
 }
 
 .status:last-child {
-  border-radius: 0px 10px 10px 0px;
+  margin-right: 0;
 }
 
 .status:after {
@@ -59,6 +55,23 @@ export default {
 
 .status.is-busy {
   background: #ff3333;
-  color: #aa1111;
+}
+
+@media only screen and (max-width: 720px) {
+  .status {
+    margin-bottom: 20px;
+  }
+
+  .status:nth-child(2),
+  .status:nth-child(4) {
+    margin-right: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .status {
+    width: 100px;
+    height: 100px;
+  }
 }
 </style>
