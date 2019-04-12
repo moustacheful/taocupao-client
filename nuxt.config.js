@@ -26,7 +26,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [],
+  css: ['assets/styles.css'],
 
   /*
   ** Plugins to load before mounting the App
@@ -45,7 +45,7 @@ module.exports = {
         imports: [
           {
             set: '@fortawesome/free-solid-svg-icons',
-            icons: ['faPoop', 'faSatelliteDish']
+            icons: ['faPoop', 'faSatelliteDish', 'faLightbulb']
           }
         ]
       }

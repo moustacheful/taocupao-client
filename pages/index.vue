@@ -5,6 +5,12 @@ import Indicator from '~/components/Indicator'
 export default {
   components: { Indicator },
 
+  data() {
+    return {
+      displayMode: 'light'
+    }
+  },
+
   computed: {
     ...mapState(['statuses', 'health', 'time']),
     isServiceAlive() {
@@ -19,7 +25,15 @@ export default {
   },
 
   methods: {
-    ...mapActions(['startListening'])
+    ...mapActions(['startListening']),
+    toggleDisplayMode() {
+      const newDisplayMode = this.displayMode === 'light' ? 'dark' : 'light'
+
+      document.body.classList.remove(this.displayMode)
+      document.body.classList.add(newDisplayMode)
+
+      this.displayMode = newDisplayMode
+    }
   },
 
   head() {
@@ -33,8 +47,17 @@ export default {
 <template>
   <section class="container">
     <div v-if="!isServiceAlive" class="service-status">
-      <fa class="icon" icon="satellite-dish"/>Out of sync!
+      <fa class="icon-health" icon="satellite-dish"/>Out of sync!
     </div>
+
+    <button
+      :title="displayMode + ' mode'"
+      class="toggle-display-mode"
+      v-on:click="toggleDisplayMode()"
+    >
+      <fa class="icon" icon="lightbulb"/>
+    </button>
+
     <div class="indicators">
       <indicator
         v-for="(status, key) in statuses"
@@ -47,9 +70,25 @@ export default {
 </template>
 
 <style scoped>
-.icon {
+.toggle-display-mode {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  appearance: none;
+  border: 0;
+  padding: 10px;
+  color: #888;
+}
+
+.dark .toggle-display-mode {
+  color: #888;
+}
+
+.icon-health {
   margin-right: 5px;
 }
+
 .service-status {
   color: #888;
   position: fixed;
@@ -66,7 +105,7 @@ export default {
   justify-content: center;
 }
 
-.indicators {
+.container .indicators {
   display: flex;
   align-items: center;
   justify-content: center;

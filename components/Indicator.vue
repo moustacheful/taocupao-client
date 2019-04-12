@@ -31,8 +31,8 @@ export default {
   width: 150px;
   height: 150px;
   text-align: center;
-  background: #eaeaea;
-  color: rgba(0, 0, 0, 0.3);
+  background: #4effc6;
+  color: rgba(0, 0, 0, 0.5);
   transition: background 0.5s ease;
   margin-right: 20px;
   border-radius: 20px;
@@ -54,7 +54,7 @@ export default {
 }
 
 .status.is-busy {
-  background: #ff3333;
+  background: #ff5e5e;
 }
 
 @media only screen and (max-width: 720px) {
