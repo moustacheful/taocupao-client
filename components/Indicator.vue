@@ -1,5 +1,10 @@
 <script>
+import Skull from './Skull'
+
+const MIN_TOXIC_THRESHOLD = 360
+
 export default {
+  components: { Skull },
   props: {
     currentTime: { default: () => Date.now(), type: Number },
     status: { default: () => {}, type: Object }
@@ -12,21 +17,44 @@ export default {
     // Whether this indicator has passed a certain threshold
     isToxic() {
       if (this.status.active) {
-        return this.time > 60
+        return this.time > MIN_TOXIC_THRESHOLD
       }
 
-      return this.time < 30 && this.status.lastDuration > 60
+      return this.time < 30 && this.status.lastDuration > MIN_TOXIC_THRESHOLD
     }
   }
 }
 </script>
 
 <template>
-  <div :class="{'status': true, 'is-busy': status.active, 'is-toxic': isToxic}">{{ status.label }}</div>
+  <div :class="{'status': true, 'is-busy': status.active, 'is-toxic': isToxic}">
+    <fa class="icon fa-4x" icon="toilet"/>
+    <label>{{status.label}}</label>
+
+    <div v-if="isToxic" class="skull-container">
+      <skull v-for="i in 2" :key="i"/>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+label {
+  margin-top: 10px;
+  bottom: 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.skull-container {
+  position: absolute;
+  top: 10px;
+  left: 57px;
+  width: 35px;
+  height: 60px;
+}
+
 .status {
+  position: relative;
   vertical-align: middle;
   width: 150px;
   height: 150px;
@@ -39,6 +67,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .status:nth-child(2) {
